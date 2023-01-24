@@ -4,7 +4,7 @@
 
 2. Execute tudo em container com os comandos:
 ``` 
-    docker build -t chat_bot 
+    docker build -t chat_bot .
     docker run chat_bot
 ```
 3. Conecte seu whatsapp no qrcode
