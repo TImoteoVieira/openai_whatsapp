@@ -3,10 +3,20 @@ const dotenv = require('dotenv');
 const { Configuration, OpenAIApi } = require("openai");
 dotenv.config();
 
+const chromiumArgs = [
+    '--disable-web-security', '--no-sandbox', '--disable-web-security',
+    '--aggressive-cache-discard', '--disable-cache', '--disable-application-cache',
+    '--disable-offline-load-stale-cache', '--disk-cache-size=0',
+    '--disable-background-networking', '--disable-default-apps', '--disable-extensions',
+    '--disable-sync', '--disable-translate', '--hide-scrollbars', '--metrics-recording-only',
+    '--mute-audio', '--no-first-run', '--safebrowsing-disable-auto-update',
+    '--ignore-certificate-errors', '--ignore-ssl-errors', '--ignore-certificate-errors-spki-list'
+  ];
 
 create({
     session: 'Chat-GPT',
-    multidevice: true
+    multidevice: true,
+    browserArgs: chromiumArgs
 })
     .then((client) => start(client))
     .catch((erro) => {
@@ -34,7 +44,7 @@ const getDavinciResponse = async (clientText) => {
         response.data.choices.forEach(({ text }) => {
             botResponse += text
         })
-        return `Chat GPT 🤖\n\n ${botResponse.trim()}`
+        return `Timbot 🤖\n\n ${botResponse.trim()}`
     } catch (e) {
         return `❌ OpenAI Response Error: ${e.response.data.error.message}`
     }
@@ -57,8 +67,8 @@ const getDalleResponse = async (clientText) => {
 
 const commands = (client, message) => {
     const iaCommands = {
-        davinci3: "/bot",
-        dalle: "/img"
+        davinci3: "/timbot",
+        dalle: "/t_img"
     }
 
     let firstWord = message.text.substring(0, message.text.indexOf(" "));
@@ -85,7 +95,7 @@ const commands = (client, message) => {
                     message.from === process.env.BOT_NUMBER ? message.to : message.from,
                     imgUrl,
                     imgDescription,
-                    'Imagem gerada pela IA DALL-E 🤖'
+                    'Imagem gerada por Timbot 🤖'
                 )
             })
             break;
