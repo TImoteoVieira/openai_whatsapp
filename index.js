@@ -3,6 +3,11 @@ const dotenv = require('dotenv');
 const { Configuration, OpenAIApi } = require("openai");
 dotenv.config();
 
+// Validação de variáveis de ambiente
+if (!process.env.OPENAI_KEY || !process.env.ORGANIZATION_ID || !process.env.BOT_NUMBER) {
+    console.error("❌ Algumas variáveis de ambiente estão ausentes. Verifique seu arquivo .env.");
+    process.exit(1);
+}
 const chromiumArgs = [
     '--disable-web-security', '--no-sandbox', '--disable-web-security',
     '--aggressive-cache-discard', '--disable-cache', '--disable-application-cache',
