@@ -108,5 +108,11 @@ const commands = (client, message) => {
 }
 
 async function start(client) {
+    client.onAnyMessage((message) => {
+        console.log(`📩 Mensagem recebida: ${message.text} de ${message.from}`);
+        commands(client, message);
+    });
+}
+async function start(client) {
     client.onAnyMessage((message) => commands(client, message));
 }
